@@ -6,17 +6,22 @@ class Notification
 {
     public $date;
     public $di;
+    public $config;
 
     public $readyCities;
     public $readyCityIds;
 
     public $notificationUsersData;
 
+    //when users get the notification
+    public $time = '09:00';
+
     public function __construct()
     {
         $this->date = new DateTime("now", new \DateTimeZone("UTC"));
         $this->di = Phalcon\DI::getDefault();
-
+        $this->config = $this->di->get('config');
+        $this->time = $this->config->app->notification_time;
     }
 
     public function check()
@@ -58,7 +63,7 @@ class Notification
         $readyCities = [];
         foreach ($cities as $city) {
             $date = new DateTime($city->time);
-            if ($date->format('H:i') === '20:15') {
+            if ($date->format('H:i') === $this->time) {
                 $readyCities[$city->cities->id] = [];
                 $readyCities[$city->cities->id]['name'] = $city->cities->name;
                 $readyCities[$city->cities->id]['timezone'] = $city->cities->timezone;
