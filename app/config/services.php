@@ -10,6 +10,7 @@ $di->setShared('config', function () {
     return include APP_PATH . "/config/config.php";
 });
 
+
 /**
  * Sets the view component
  */
@@ -40,11 +41,11 @@ $di->setShared('db', function () {
 
     $class = 'Phalcon\Db\Adapter\Pdo\\' . $config->database->adapter;
     $params = [
-        'host'     => $config->database->host,
-        'username' => $config->database->username,
-        'password' => $config->database->password,
-        'dbname'   => $config->database->dbname,
-        'charset'  => $config->database->charset
+      'host' => $config->database->host,
+      'username' => $config->database->username,
+      'password' => $config->database->password,
+      'dbname' => $config->database->dbname,
+      'charset' => $config->database->charset
     ];
 
     if ($config->database->adapter == 'Postgresql') {
