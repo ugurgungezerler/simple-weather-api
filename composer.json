@@ -1,0 +1,9 @@
+{
+  "require-dev": {
+    "phalcon/devtools": "~3.4",
+    "phalcon/ide-stubs": "^3.4"
+  },
+  "require": {
+    "dmkit/phalcon-jwt-auth" : "dev-master"
+  }
+}
