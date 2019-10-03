@@ -9,6 +9,7 @@ class AuthController extends BaseController
 {
     /**
      * Register API
+     *
      * @return \Phalcon\Http\Response
      */
     public function register()
@@ -17,9 +18,11 @@ class AuthController extends BaseController
 
         // Check selected city is exists
         $cityId = $rawBody['city_id'];
-        $city = Cities::findFirst(["id = $cityId"]);
-        if (!$city) {
-            return $this->abort('Selected city is not exists');
+        if ($cityId) {
+            $city = Cities::findFirst(["id = $cityId"]);
+            if (!$city) {
+                return $this->abort('Selected city is not exists');
+            }
         }
 
         $user = new Users();
@@ -27,7 +30,7 @@ class AuthController extends BaseController
         $user->password = $this->security->hash($rawBody['password']);
         $user->lang = $rawBody['lang'];
         $user->os = $rawBody['os'];
-        $user->device_token = $rawBody['device_token'];
+        $user->device_token = isset($rawBody['device_token']) ? $rawBody['device_token'] : '';
 
         if (!$user->save()) {
             return $this->validationResponse($user);
@@ -35,6 +38,7 @@ class AuthController extends BaseController
 
         //hide password?
         unset($user->password);
+
         $token = $this->createToken($this, $user);
 
         return $this->response(['token' => $token, 'user' => $user], 'Register completed successfully.');
@@ -43,6 +47,7 @@ class AuthController extends BaseController
 
     /**
      * Login API
+     *
      * @return \Phalcon\Http\Response
      */
     public function login()

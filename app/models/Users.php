@@ -58,29 +58,53 @@ class Users extends \Phalcon\Mvc\Model
      *
      * @return boolean
      */
+
+    public function beforeValidationOnCreate()
+    {
+        $this->_isCreate = true;
+    }
+
+    public function beforeValidationOnUpdate()
+    {
+        $this->_isCreate = false;
+    }
+
     public function validation()
     {
         $validator = new Validation();
+        if ($this->_isCreate === true) {
+            $validator->add(
+              'email',
+              new EmailValidator(
+                [
+                  'model' => $this,
+                  'message' => 'Please enter a correct email address',
+                ]
+              )
+            );
 
-        $validator->add(
-          'email',
-          new EmailValidator(
-            [
-              'model' => $this,
-              'message' => 'Please enter a correct email address',
-            ]
-          )
-        );
+            $validator->add(
+              'email',
+              new UniquenessValidator(
+                [
+                  "model" => new Users(),
+                  "message" => "Email must be unique",
+                ]
+              )
+            );
 
-        $validator->add(
-          'email',
-          new UniquenessValidator(
-            [
-              "model" => new Users(),
-              "message" => "Email must be unique",
-            ]
-          )
-        );
+            $validator->add(
+              "password",
+              new StringLength(
+                [
+                  "max" => 100,
+                  "min" => 8,
+                  "messageMaximum" => "Maximum password length must be 100",
+                  "messageMinimum" => "Minimum password length must be 8",
+                ]
+              )
+            );
+        }
 
         $validator->add(
           'os',
@@ -102,17 +126,6 @@ class Users extends \Phalcon\Mvc\Model
           )
         );
 
-        $validator->add(
-          "password",
-          new StringLength(
-            [
-              "max"            => 100,
-              "min"            => 8,
-              "messageMaximum" => "Maximum password length must be 100",
-              "messageMinimum" => "Minimum password length must be 8",
-            ]
-          )
-        );
 
         return $this->validate($validator);
     }
@@ -122,8 +135,11 @@ class Users extends \Phalcon\Mvc\Model
      */
     public function initialize()
     {
+        $this->useDynamicUpdate(true);
+
         $this->setSchema("weather-db");
         $this->setSource("Users");
+
         $this->addBehavior(
           new Timestampable(
             [
@@ -134,6 +150,13 @@ class Users extends \Phalcon\Mvc\Model
             ]
           )
         );
+        $this->skipAttributesOnUpdate(array('email', 'password'));
+
+    }
+
+    public function validationHasFailed()
+    {
+        return false;
     }
 
     /**

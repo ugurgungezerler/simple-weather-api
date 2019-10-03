@@ -76,9 +76,6 @@ class AuthMiddleware implements MiddlewareInterface
                 $uid = $token->getClaim('uid');
                 $auth = Users::findFirst(["id = $uid"]);
 
-                //hide password from response?
-                unset($auth->password);
-
                 //inject authenticated user to app
                 $app->auth = $auth;
             } catch (Exception $e) {
