@@ -42,7 +42,10 @@ $app->mount($auth);
 $dummy = new MicroCollection();
 $dummy->setHandler(new DummyController());
 $dummy->setPrefix('/dummy');
-$dummy->get('/', 'indexAction', 'create_dummy_data');
+$dummy->get('/create', 'createAction', 'create_dummy_data');
+$dummy->get('/users', 'users', 'users_dummy');
+$dummy->get('/coupons', 'coupons', 'coupons_dummy');
+$dummy->get('/cities', 'cities', 'cities_dummy');
 $app->mount($dummy);
 
 

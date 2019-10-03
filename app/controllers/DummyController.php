@@ -3,7 +3,7 @@
 class DummyController extends BaseController
 {
 
-    public function indexAction()
+    public function createAction()
     {
         try {
             $cities = Cities::find();
@@ -35,6 +35,29 @@ class DummyController extends BaseController
             return $this->abort('Something went wrong');
         }
         return $this->response(null, 'Success');
+    }
+
+    public function users()
+    {
+        $users = Users::find();
+        $data = [];
+
+        foreach ($users as $user) {
+            $user->password = null;
+            $data[] = $user;
+        }
+
+        return $this->response($data);
+    }
+
+    public function coupons()
+    {
+        return $this->response(Coupons::find());
+    }
+
+    public function cities()
+    {
+        return $this->response(Cities::find());
     }
 
 }
