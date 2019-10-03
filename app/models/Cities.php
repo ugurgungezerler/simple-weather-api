@@ -79,16 +79,16 @@ class Cities extends \Phalcon\Mvc\Model
     public static function createCityDummyData()
     {
         $data = [
-          ["Bursa", "Europe/Istanbul"],
-          ["Istanbul", "Europe/Istanbul"],
-          ["New York", "America/New_York"],
-          ["Rome", "Europe/Rome"],
-          ["Amsterdam", "Europe/Amsterdam"],
-          ["Freetown", "Africa/Freetown"],
-          ["Sao Paulo", "America/Sao_Paulo"],
-          ["Moscow", "Europe/Moscow"],
-          ["Mumbai", "Asia/Kolkata"],
-          ["Suva", "Pacific/Fiji"],
+          ["Bursa", "+03:00"],
+          ["Istanbul", "+03:00"],
+          ["New York", "-05:00"],
+          ["Rome", "+01:00"],
+          ["Amsterdam", "+01:00"],
+          ["Freetown", "+00:00"],
+          ["Sao Paulo", "-03:00"],
+          ["Moscow", "+03:00"],
+          ["Mumbai", "+05:30"],
+          ["Suva", "+12:00"],
         ];
 
         return $data;

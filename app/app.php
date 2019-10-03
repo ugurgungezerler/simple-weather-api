@@ -46,6 +46,7 @@ $dummy->get('/create', 'createAction', 'create_dummy_data');
 $dummy->get('/users', 'users', 'users_dummy');
 $dummy->get('/coupons', 'coupons', 'coupons_dummy');
 $dummy->get('/cities', 'cities', 'cities_dummy');
+$dummy->get('/test-cron', 'testCron', 'cron');
 $app->mount($dummy);
 
 

@@ -60,5 +60,14 @@ class DummyController extends BaseController
         return $this->response(Cities::find());
     }
 
+    public function testCron()
+    {
+        $NotfCron = new NotificationCron();
+        $NotfCron->calc();
+
+
+        return $this->response($NotfCron->send());
+    }
+
 }
 
