@@ -19,6 +19,7 @@ localhost:8000/dummy/create
 # Ayarlar (Config.php)
 ### App
 'notification_time' => '09:00'
+
 'life' => 900 (15dk)
 ### Database
   'adapter' => 'Mysql',  
