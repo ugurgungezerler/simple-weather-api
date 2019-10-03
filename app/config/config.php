@@ -21,12 +21,16 @@ return new \Phalcon\Config([
     'migrationsDir' => APP_PATH . '/migrations/',
     'viewsDir' => APP_PATH . '/views/',
     'controllersDir' => APP_PATH . '/controllers/',
+    'middlewaresDir' => APP_PATH . '/middlewares/',
     'baseUri' => '/weather-app-simple/',
     'vendorDir' => BASE_PATH . '/vendor/'
   ],
   'app' => [
     'url' => 'localhost',
-    'jwt_secret' => 'RmhwYWxUWDl2bXlkTHg4TOOAEeS5F5av.c6BSLAmd1DLv7QISdabK',
-    'jwt_life' => 15
-  ]
+  ],
+  'jwt' => [
+    'identifier' => '5f1g24a12bb',
+    'secret' => 'RmhwYWxUWDl2bXlkTHg4TOOAEeS5F5av.c6BSLAmd1DLv7QISdabK',
+    'life' => 900,
+  ],
 ]);

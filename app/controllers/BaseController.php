@@ -37,10 +37,9 @@ class BaseController extends Controller
         $time = time();
         $token = (new Builder())->issuedBy($app->config->app->url)// Configures the issuer (iss claim)
         ->permittedFor($app->config->app->url)// Configures the audience (aud claim)
-        ->identifiedBy('4f1g23a12aa', true)// Configures the id (jti claim), replicating as a header item
+        ->identifiedBy($app->config->jwt->identifier, true)// Configures the id (jti claim), replicating as a header item
         ->issuedAt($time)// Configures the time that the token was issue (iat claim)
-        ->canOnlyBeUsedAfter($time + 60)// Configures the time that the token can be used (nbf claim)
-        ->expiresAt($time + $app->config->app->jwt_life)// Configures the expiration time of the token (exp claim)
+        ->expiresAt($time + $app->config->jwt->life)// Configures the expiration time of the token (exp claim)
         ->withClaim('uid', $user->id)// Configures a new claim, called "uid"
         ->getToken($signer, new \Lcobucci\JWT\Signer\Key($privateKey)); // Retrieves the generated token
 

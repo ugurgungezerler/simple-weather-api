@@ -4,6 +4,6 @@
     "phalcon/ide-stubs": "^3.4"
   },
   "require": {
-    "dmkit/phalcon-jwt-auth" : "dev-master"
+    "lcobucci/jwt": "^3.3"
   }
 }

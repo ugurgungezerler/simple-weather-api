@@ -2,11 +2,21 @@
 
 use Phalcon\Di\FactoryDefault;
 use Phalcon\Mvc\Micro;
+use Phalcon\Events\Manager;
+
 
 error_reporting(E_ALL);
 
+/**
+ *
+ */
 define('BASE_PATH', dirname(__DIR__));
+/**
+ *
+ */
 define('APP_PATH', BASE_PATH . '/app');
+
+
 
 try {
 
@@ -37,10 +47,18 @@ try {
      */
     $app = new Micro($di);
 
+    $eventsManager = new Manager();
+    $eventsManager->attach('micro', new AuthMiddleware());
+    $app->before(new AuthMiddleware());
+//    $app->after(new AuthMiddleware());
+    $app->setEventsManager($eventsManager);
+
+
     /**
      * Include Application
      */
     include APP_PATH . '/app.php';
+
 
     /**
      * Handle the request
@@ -48,6 +66,6 @@ try {
     $app->handle();
 
 } catch (\Exception $e) {
-      echo $e->getMessage() . '<br>';
-      echo '<pre>' . $e->getTraceAsString() . '</pre>';
+    echo $e->getMessage() . '<br>';
+    echo '<pre>' . $e->getTraceAsString() . '</pre>';
 }
