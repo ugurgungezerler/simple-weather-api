@@ -1,10 +1,16 @@
 # Kurulum
 git clone git@github.com:ugurgungezerler/simple-weather-api.git
+
 cd simple-weather-api
+
 composer install
+
 (Bu adimdan sonra mysql ayarlari dogru olmasi gerekir (config.php))
+
 phalcon migration run 
+
 phalcon serve
+
 localhost:8000/dummy/create
 
 # Postman
