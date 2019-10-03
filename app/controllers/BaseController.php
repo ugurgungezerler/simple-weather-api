@@ -33,7 +33,7 @@ class BaseController extends Controller
     public function createToken($app, $user)
     {
         $signer = new Sha256();
-        $privateKey = $app->config->app->jwt_secret;
+        $privateKey = $app->config->jwt->secret;
         $time = time();
         $token = (new Builder())->issuedBy($app->config->app->url)// Configures the issuer (iss claim)
         ->permittedFor($app->config->app->url)// Configures the audience (aud claim)

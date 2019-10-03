@@ -37,7 +37,7 @@ class AuthController extends BaseController
         }
 
         //hide password?
-        unset($user->password);
+        $user->password = null;
 
         $token = $this->createToken($this, $user);
 
@@ -69,7 +69,7 @@ class AuthController extends BaseController
                 $token = $this->createToken($this, $user);
 
                 //hide password from $this->response?
-                unset($user->password);
+                $user->password = null;
 
                 return $this->response(['token' => $token, 'user' => $user], 'success');
             } else {

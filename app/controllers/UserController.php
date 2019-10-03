@@ -29,7 +29,7 @@ class UserController extends BaseController
             return $this->validationResponse($user);
         }
         //hide password?
-        unset($user->password);
+        $user->password = null;
 
         return $this->response($user, 'User Updated');
     }
@@ -51,6 +51,10 @@ class UserController extends BaseController
                 1 => $code,
               ]
             ]);
+
+            if (!$coupon) {
+                return $this->abort('Coupon is not valid.');
+            }
 
             $expires = DateTime::createFromFormat('Y-m-d H:i:s', $coupon->expire_at);
 
