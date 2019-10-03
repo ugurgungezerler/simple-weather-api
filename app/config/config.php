@@ -7,19 +7,26 @@ defined('BASE_PATH') || define('BASE_PATH', getenv('BASE_PATH') ?: realpath(dirn
 defined('APP_PATH') || define('APP_PATH', BASE_PATH . '/app');
 
 return new \Phalcon\Config([
-    'database' => [
-        'adapter'    => 'Mysql',
-        'host'       => 'localhost',
-        'username'   => 'root',
-        'password'   => '',
-        'dbname'     => 'weather-db',
-        'charset'    => 'utf8',
-    ],
+  'database' => [
+    'adapter' => 'Mysql',
+    'host' => 'localhost',
+    'username' => 'root',
+    'password' => '',
+    'dbname' => 'weather-db',
+    'charset' => 'utf8',
+  ],
 
-    'application' => [
-        'modelsDir'      => APP_PATH . '/models/',
-        'migrationsDir'  => APP_PATH . '/migrations/',
-        'viewsDir'       => APP_PATH . '/views/',
-        'baseUri'        => '/weather-app-simple/',
-    ]
+  'application' => [
+    'modelsDir' => APP_PATH . '/models/',
+    'migrationsDir' => APP_PATH . '/migrations/',
+    'viewsDir' => APP_PATH . '/views/',
+    'controllersDir' => APP_PATH . '/controllers/',
+    'baseUri' => '/weather-app-simple/',
+    'vendorDir' => BASE_PATH . '/vendor/'
+  ],
+  'app' => [
+    'url' => 'localhost',
+    'jwt_secret' => 'RmhwYWxUWDl2bXlkTHg4TOOAEeS5F5av.c6BSLAmd1DLv7QISdabK',
+    'jwt_life' => 15
+  ]
 ]);
