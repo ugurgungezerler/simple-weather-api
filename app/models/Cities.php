@@ -76,4 +76,35 @@ class Cities extends \Phalcon\Mvc\Model
         return true;
     }
 
+    public static function createCityDummyData()
+    {
+        $data = [
+          ["Bursa", "Europe/Istanbul"],
+          ["Istanbul", "Europe/Istanbul"],
+          ["New York", "America/New_York"],
+          ["Rome", "Europe/Rome"],
+          ["Amsterdam", "Europe/Amsterdam"],
+          ["Freetown", "Africa/Freetown"],
+          ["Sao Paulo", "America/Sao_Paulo"],
+          ["Moscow", "Europe/Moscow"],
+          ["Mumbai", "Asia/Kolkata"],
+          ["Suva", "Pacific/Fiji"],
+        ];
+
+        return $data;
+
+    }
+
+    public static function createWeatherInfoDummyData()
+    {
+        $cities = Cities::find();
+        $data = [];
+        foreach ($cities as $city) {
+            for ($i = 0; $i < 59; $i++) {
+                $date = date("Y-m-d", strtotime("+$i day"));
+                $data[] = [$city->id, $date, rand(21, 29)];
+            }
+        }
+        return $data;
+    }
 }

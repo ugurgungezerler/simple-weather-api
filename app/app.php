@@ -38,6 +38,13 @@ $auth->patch('/', 'update', 'update');
 $auth->post('/redeem', 'redeem', 'redeem');
 $app->mount($auth);
 
+//DummyController
+$dummy = new MicroCollection();
+$dummy->setHandler(new DummyController());
+$dummy->setPrefix('/dummy');
+$dummy->get('/', 'indexAction', 'create_dummy_data');
+$app->mount($dummy);
+
 
 /**
  * Not found handler
@@ -45,6 +52,6 @@ $app->mount($auth);
 $app->notFound(
   function () use ($app) {
       $app->response->setStatusCode(404, "Not Found")->sendHeaders();
-      $app->response->setJsonContent(['message'=>'404 not found']);
+      $app->response->setJsonContent(['message' => '404 not found']);
       $app->response->send();
   });

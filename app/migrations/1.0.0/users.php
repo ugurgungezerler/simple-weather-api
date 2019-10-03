@@ -60,9 +60,9 @@ class UsersMigration_100 extends Migration
                     new Column(
                         'os',
                         [
-                            'type' => Column::TYPE_CHAR,
+                            'type' => Column::TYPE_VARCHAR,
                             'notNull' => true,
-                            'size' => 1,
+                            'size' => 50,
                             'after' => 'lang'
                         ]
                     ),
@@ -75,21 +75,41 @@ class UsersMigration_100 extends Migration
                         ]
                     ),
                     new Column(
+                        'city_id',
+                        [
+                            'type' => Column::TYPE_INTEGER,
+                            'unsigned' => true,
+                            'size' => 11,
+                            'after' => 'device_token'
+                        ]
+                    ),
+                    new Column(
+                        'is_premium',
+                        [
+                            'type' => Column::TYPE_INTEGER,
+                            'default' => "0",
+                            'notNull' => true,
+                            'size' => 1,
+                            'after' => 'city_id'
+                        ]
+                    ),
+                    new Column(
                         'created_at',
                         [
                             'type' => Column::TYPE_TIMESTAMP,
                             'size' => 1,
-                            'after' => 'device_token'
+                            'after' => 'is_premium'
                         ]
                     )
                 ],
                 'indexes' => [
                     new Index('PRIMARY', ['id'], 'PRIMARY'),
-                    new Index('users_email_unique', ['email'], 'UNIQUE')
+                    new Index('users_email_unique', ['email'], 'UNIQUE'),
+                    new Index('users_city_id_index', ['city_id'], null)
                 ],
                 'options' => [
                     'TABLE_TYPE' => 'BASE TABLE',
-                    'AUTO_INCREMENT' => '',
+                    'AUTO_INCREMENT' => '44',
                     'ENGINE' => 'InnoDB',
                     'TABLE_COLLATION' => 'utf8_general_ci'
                 ],

@@ -191,4 +191,16 @@ class Users extends \Phalcon\Mvc\Model
         return parent::findFirst($parameters);
     }
 
+    public static function createDummyData()
+    {
+        $di = \Phalcon\DI::getDefault();
+
+        $data = [];
+        for ($i = 0; $i < 20; $i++) {
+            $data[] = ["john{$i}@gmail.com", $di->get('security')->hash(12345), 'tr', 'ios', rand(1, 10)];
+        }
+        return $data;
+    }
+
+
 }
