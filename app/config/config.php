@@ -28,6 +28,12 @@ return new \Phalcon\Config([
   ],
   'app' => [
     'url' => 'localhost',
+    'authorizeExceptions' => [
+      '/',
+      'login',
+      'register',
+      'create_dummy_data'
+    ]
   ],
   'jwt' => [
     'identifier' => '5f1g24a12bb',
