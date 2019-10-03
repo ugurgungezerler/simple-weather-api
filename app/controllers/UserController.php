@@ -41,6 +41,46 @@ class UserController extends BaseController
         return $this->response($user, 'User Updated');
     }
 
+    public function redeem()
+    {
+        $rawBody = $this->request->getJsonRawBody(true);
+        if (isset($rawBody['code'])) {
+            $code = $rawBody['code'];
+            $user = $this->app->auth;
+
+            if ($user->is_premium) {
+                return $this->abort('User already premium');
+            }
+
+            $coupon = Coupons::findFirst([
+              'conditions' => 'code = ?1',
+              'bind' => [
+                1 => $code,
+              ]
+            ]);
+
+            $expires = DateTime::createFromFormat('Y-m-d H:i:s', $coupon->expire_at);
+
+            if (new DateTime() > $expires) {
+                return $this->abort('Coupon is expired');
+            }
+
+            if ($coupon->remain < 1) {
+                return $this->abort('Coupon is not valid');
+            }
+
+            $coupon->remain--;
+            $coupon->update();
+
+            $user->is_premium = 1;
+            $user->update();
+
+            return $this->response(null, 'Coupon Activated!');
+
+        }
+
+        return $this->abort('Wrong code');
+    }
 
 
 }
