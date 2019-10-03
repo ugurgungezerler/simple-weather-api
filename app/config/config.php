@@ -22,6 +22,7 @@ return new \Phalcon\Config([
     'viewsDir' => APP_PATH . '/views/',
     'controllersDir' => APP_PATH . '/controllers/',
     'middlewaresDir' => APP_PATH . '/middlewares/',
+    'helpersDir' => APP_PATH . '/helpers/',
     'baseUri' => '/weather-app-simple/',
     'vendorDir' => BASE_PATH . '/vendor/'
   ],

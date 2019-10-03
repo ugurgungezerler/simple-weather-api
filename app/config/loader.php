@@ -7,10 +7,11 @@ $loader = new \Phalcon\Loader();
 $loader->registerFiles([$config->application->vendorDir . '/autoload.php']);
 
 $loader->registerDirs(
-    [
-        $config->application->modelsDir,
-        $config->application->controllersDir,
-        $config->application->middlewaresDir,
-    ]
+  [
+    $config->application->modelsDir,
+    $config->application->controllersDir,
+    $config->application->middlewaresDir,
+    $config->application->helpersDir,
+  ]
 
 )->register();
