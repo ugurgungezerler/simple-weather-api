@@ -1,6 +1,8 @@
 <?php
 
+use Phalcon\Db\Column;
 use Phalcon\Mvc\Model\Behavior\Timestampable;
+use Phalcon\Mvc\Model\MetaData;
 use Phalcon\Validation;
 use Phalcon\Validation\Validator\Confirmation;
 use Phalcon\Validation\Validator\Email as EmailValidator;
@@ -54,10 +56,22 @@ class Users extends \Phalcon\Mvc\Model
     public $created_at;
 
     /**
-     * Validations and business logic
      *
-     * @return boolean
+     * @var integer
      */
+    public $city_id;
+
+//    public function metaData()
+//    {
+//        return [
+//          MetaData::MODELS_DATA_TYPES => [
+//            'id' => Column::TYPE_INTEGER,
+//            'email' => Column::TYPE_VARCHAR,
+//            'city_id' => Column::TYPE_INTEGER,
+//            'is_premium' => Column::TYPE_BOOLEAN,
+//          ],
+//        ];
+//    }
 
     public function beforeValidationOnCreate()
     {
