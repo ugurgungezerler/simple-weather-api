@@ -34,7 +34,7 @@ $auth = new MicroCollection();
 $auth->setHandler(new UserController);
 $auth->setPrefix('/user');
 $auth->get('/', 'profile', 'profile');
-$auth->patch('/update', 'update', '');
+$auth->patch('/', 'update', 'update');
 $app->mount($auth);
 
 
