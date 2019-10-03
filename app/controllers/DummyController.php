@@ -26,7 +26,6 @@ class DummyController extends BaseController
             $batch->data = Coupons::createDummyData();
             $batch->insert();
 
-
             $batch = new BatchInsert('weather_infos');
             $batch->columns = ['city_id', 'date', 'celsius'];
             $batch->data = Cities::createWeatherInfoDummyData();
@@ -62,11 +61,10 @@ class DummyController extends BaseController
 
     public function testCron()
     {
-        $NotfCron = new NotificationCron();
-        $NotfCron->calc();
+        $notification = new Notification();
+        $notification->check();
 
-
-        return $this->response($NotfCron->send());
+        return $this->response($notification->send());
     }
 
 }
