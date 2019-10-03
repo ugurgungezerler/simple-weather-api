@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 use Phalcon\Db\Column;
 use Phalcon\Db\Index;
@@ -18,58 +18,58 @@ class CouponsMigration_101 extends Migration
     public function morph()
     {
         $this->morphTable('coupons', [
-                'columns' => [
-                    new Column(
-                        'id',
-                        [
-                            'type' => Column::TYPE_INTEGER,
-                            'unsigned' => true,
-                            'notNull' => true,
-                            'autoIncrement' => true,
-                            'size' => 11,
-                            'first' => true
-                        ]
-                    ),
-                    new Column(
-                        'code',
-                        [
-                            'type' => Column::TYPE_VARCHAR,
-                            'notNull' => true,
-                            'size' => 64,
-                            'after' => 'id'
-                        ]
-                    ),
-                    new Column(
-                        'remain',
-                        [
-                            'type' => Column::TYPE_INTEGER,
-                            'default' => "0",
-                            'unsigned' => true,
-                            'notNull' => true,
-                            'size' => 5,
-                            'after' => 'code'
-                        ]
-                    ),
-                    new Column(
-                        'expire_at',
-                        [
-                            'type' => Column::TYPE_TIMESTAMP,
-                            'notNull' => true,
-                            'size' => 1,
-                            'after' => 'remain'
-                        ]
-                    )
-                ],
-                'indexes' => [
-                    new Index('PRIMARY', ['id'], 'PRIMARY')
-                ],
-                'options' => [
-                    'TABLE_TYPE' => 'BASE TABLE',
-                    'AUTO_INCREMENT' => '',
-                    'ENGINE' => 'InnoDB',
-                    'TABLE_COLLATION' => 'utf8_general_ci'
-                ],
-            ]
+            'columns' => [
+              new Column(
+                'id',
+                [
+                  'type' => Column::TYPE_INTEGER,
+                  'unsigned' => true,
+                  'notNull' => true,
+                  'autoIncrement' => true,
+                  'size' => 11,
+                  'first' => true
+                ]
+              ),
+              new Column(
+                'code',
+                [
+                  'type' => Column::TYPE_VARCHAR,
+                  'notNull' => true,
+                  'size' => 64,
+                  'after' => 'id'
+                ]
+              ),
+              new Column(
+                'remain',
+                [
+                  'type' => Column::TYPE_INTEGER,
+                  'default' => "0",
+                  'unsigned' => true,
+                  'notNull' => true,
+                  'size' => 5,
+                  'after' => 'code'
+                ]
+              ),
+              new Column(
+                'expire_at',
+                [
+                  'type' => Column::TYPE_TIMESTAMP,
+                  'notNull' => true,
+                  'size' => 1,
+                  'after' => 'remain'
+                ]
+              )
+            ],
+            'indexes' => [
+              new Index('PRIMARY', ['id'], 'PRIMARY')
+            ],
+            'options' => [
+              'TABLE_TYPE' => 'BASE TABLE',
+              'AUTO_INCREMENT' => '',
+              'ENGINE' => 'InnoDB',
+              'TABLE_COLLATION' => 'utf8_general_ci'
+            ],
+          ]
         );
     }
 
