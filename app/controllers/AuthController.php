@@ -19,9 +19,14 @@ class AuthController extends BaseController
         // Check selected city is exists
         $cityId = $rawBody['city_id'];
         if ($cityId) {
-            $city = Cities::findFirst(["id = $cityId"]);
+            $city = Cities::findFirst([
+              'conditions' => 'id = ?1',
+              'bind' => [
+                1 => $cityId,
+              ]
+            ]);
             if (!$city) {
-                return $this->abort('Selected city is not exists');
+                return $this->abort('City is not exists');
             }
         }
 
@@ -31,6 +36,8 @@ class AuthController extends BaseController
         $user->lang = $rawBody['lang'];
         $user->os = $rawBody['os'];
         $user->device_token = isset($rawBody['device_token']) ? $rawBody['device_token'] : '';
+
+        $cityId && $user->city_id = $cityId;
 
         if (!$user->save()) {
             return $this->validationResponse($user);
@@ -57,7 +64,12 @@ class AuthController extends BaseController
         $email = $rawBody['email'];
         $password = $rawBody['password'];
 
-        $user = Users::findFirst(["email = '$email'"]);
+        $user = Users::findFirst([
+          'conditions' => 'email = ?1',
+          'bind' => [
+            1 => $email,
+          ]
+        ]);
         if ($user) {
             if ($this->security->checkHash($password, $user->password)) {
 

@@ -74,7 +74,12 @@ class AuthMiddleware implements MiddlewareInterface
 
                 //get user
                 $uid = $token->getClaim('uid');
-                $auth = Users::findFirst(["id = $uid"]);
+                $auth = Users::findFirst([
+                  'conditions' => 'id = ?1',
+                  'bind' => [
+                    1 => $uid,
+                  ]
+                ]);
 
                 //inject authenticated user to app
                 $app->auth = $auth;

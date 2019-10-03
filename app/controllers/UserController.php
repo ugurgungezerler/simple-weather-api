@@ -13,15 +13,21 @@ class UserController extends BaseController
     {
         $rawBody = $this->request->getJsonRawBody(true);
 
+        $user = $this->app->auth;
         // Check selected city is exists
         $cityId = $rawBody['city_id'];
         if ($cityId) {
-            $city = Cities::findFirst(["id = $cityId"]);
+            $city = Cities::findFirst([
+              'conditions' => 'id = ?1',
+              'bind' => [
+                1 => $cityId,
+              ]
+            ]);
             if (!$city) {
                 return $this->abort('Selected city is not exists');
             }
+            $user->city_id = $cityId;
         }
-        $user = $this->app->auth;
         $user->lang = $rawBody['lang'];
         $user->os = $rawBody['os'];
         $user->device_token = isset($rawBody['device_token']) ? $rawBody['device_token'] : '';
@@ -34,6 +40,7 @@ class UserController extends BaseController
 
         return $this->response($user, 'User Updated');
     }
+
 
 
 }

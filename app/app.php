@@ -35,6 +35,7 @@ $auth->setHandler(new UserController);
 $auth->setPrefix('/user');
 $auth->get('/', 'profile', 'profile');
 $auth->patch('/', 'update', 'update');
+$auth->post('/redeem', 'redeem', 'redeem');
 $app->mount($auth);
 
 
