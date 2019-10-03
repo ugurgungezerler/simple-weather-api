@@ -62,4 +62,18 @@ class Cities extends \Phalcon\Mvc\Model
         return parent::findFirst($parameters);
     }
 
+    public static function isExists($id)
+    {
+        $city = Cities::findFirst([
+          'conditions' => 'id = ?1',
+          'bind' => [
+            1 => $id,
+          ]
+        ]);
+        if (!$city) {
+            return false;
+        }
+        return true;
+    }
+
 }

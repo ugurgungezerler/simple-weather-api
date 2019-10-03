@@ -16,21 +16,14 @@ class AuthController extends BaseController
     {
         $rawBody = $this->request->getJsonRawBody(true);
 
+        $user = new Users();
+
         // Check selected city is exists
         $cityId = $rawBody['city_id'];
-        if ($cityId) {
-            $city = Cities::findFirst([
-              'conditions' => 'id = ?1',
-              'bind' => [
-                1 => $cityId,
-              ]
-            ]);
-            if (!$city) {
-                return $this->abort('City is not exists');
-            }
+        if (Cities::isExists($cityId)) {
+            $user->city_id = $cityId;
         }
 
-        $user = new Users();
         $user->email = $rawBody['email'];
         $user->password = $this->security->hash($rawBody['password']);
         $user->lang = $rawBody['lang'];
