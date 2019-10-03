@@ -31,3 +31,9 @@ localhost:8000/dummy/create
 ### Cron string  
 0 * * * * /usr/bin/php /app/path/NotificationCron.php
 
+### TODOS
+Docker Compose
+
+Unit tests
+
+Notification Cron Refactor
