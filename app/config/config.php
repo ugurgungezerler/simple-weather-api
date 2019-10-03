@@ -39,6 +39,6 @@ return new \Phalcon\Config([
   'jwt' => [
     'identifier' => '5f1g24a12bb',
     'secret' => 'RmhwYWxUWDl2bXlkTHg4TOOAEeS5F5av.c6BSLAmd1DLv7QISdabK',
-    'life' => 9000,
+    'life' => 900,
   ],
 ]);
