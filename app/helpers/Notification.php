@@ -16,18 +16,13 @@ class Notification
      */
     public $di;
     /**
+     * @var db
+     */
+    public $db;
+    /**
      * @var mixed
      */
     public $config;
-
-    /**
-     * @var
-     */
-    public $readyCities;
-    /**
-     * @var
-     */
-    public $readyCityIds;
 
     /**
      * @var
@@ -47,6 +42,7 @@ class Notification
     {
         $this->date = new DateTime("now", new \DateTimeZone("UTC"));
         $this->di = Phalcon\DI::getDefault();
+        $this->db = $this->di->getShared('db');
         $this->config = $this->di->get('config');
         $this->time = $this->config->app->notification_time;
     }
@@ -54,99 +50,30 @@ class Notification
     /**
      *
      */
-    public function check()
+    public function getUsers()
     {
-        //Get Cities with current local date
-        $this->getReadyCities();
+        $date = $this->date->format('Y-m-d H:i');
+        $query = $this->db->query("SELECT
+              cities.*,
+              weather_infos.date,
+              weather_infos.celsius,
+              users.email,
+              users.device_token,
+              time( CONVERT_TZ( '$date', '+00:00', timezone ) ) AS time,
+              date( CONVERT_TZ( '$date', '+00:00', timezone ) ) AS _DATE 
+            FROM
+              cities
+              LEFT JOIN weather_infos ON cities.id = weather_infos.city_id
+              LEFT JOIN users ON users.city_id = cities.id 
+            HAVING
+              TIME = '$this->time' 
+              AND _DATE = weather_infos.date");
+        $query->setFetchMode(Phalcon\Db::FETCH_ASSOC);
+        $result = $query->fetchAll($query);
 
-        $this->injectWeatherInfosToCities();
-
-        $this->createNotificationData();
-
+        $this->notificationUsersData = $result;
     }
 
-    /**
-     *
-     */
-    private function injectWeatherInfosToCities()
-    {
-        $implodeIds = implode(',', $this->readyCityIds);
-
-        $onlyDate = $this->date->format('Y-m-d');
-        $weatherInfo = WeatherInfos::find([
-          'conditions' => "date='{$onlyDate}' AND city_id IN ({$implodeIds})",
-        ]);
-
-        foreach ($weatherInfo->toArray() as $info) {
-            $this->readyCities[$info['city_id']]['date'] = $info['date'];
-            $this->readyCities[$info['city_id']]['celsius'] = $info['celsius'];
-        }
-    }
-
-
-    /**
-     * Relations ile refaktör edilebilir.
-     *
-     * Burada relations ile birden çok sorgu yerine key
-     *
-     * yöntemi ile tek seferde data oluşturulmuştur.
-     *
-     */
-    private function getReadyCities()
-    {
-
-        $query = new Query(
-          "SELECT Cities.*, CONVERT_TZ('{$this->date->format('Y-m-d H:i')}','+00:00',timezone) AS time FROM Cities",
-          $this->di
-        );
-        $cities = $query->execute();
-
-        //Filter cities local time 09:00
-        $readyCities = [];
-        foreach ($cities as $city) {
-            $date = new DateTime($city->time);
-            if ($date->format('H:i') === $this->time) {
-                $readyCities[$city->cities->id] = [];
-                $readyCities[$city->cities->id]['name'] = $city->cities->name;
-                $readyCities[$city->cities->id]['timezone'] = $city->cities->timezone;
-                $readyCities[$city->cities->id]['id'] = $city->cities->id;
-            }
-        };
-
-        $this->readyCities = $readyCities;
-
-        $this->readyCityIds = array_keys($this->readyCities);
-
-        if (!count($this->readyCityIds)) {
-            echo "No city ready";
-            exit;
-        }
-
-
-    }
-
-    /**
-     *
-     */
-    private function createNotificationData()
-    {
-        $implodeIds = implode(',', $this->readyCityIds);
-
-        $usersForNotification = Users::find([
-          'conditions' => 'city_id IN (' . $implodeIds . ')',
-        ]);
-        $data = [];
-
-        foreach ($usersForNotification as $user) {
-            $city = $this->readyCities[$user->city_id];
-            $data[] = [
-              'device_token' => $user->device_token,
-              'message' => "Today's weather in {$city['name']} {$city['celsius']}C"
-            ];
-        }
-
-        $this->notificationUsersData = $data;
-    }
 
     /**
      * @return int
@@ -162,10 +89,14 @@ class Notification
     public function send()
     {
         //TODO : Chunk data and send Notifications with queue
-
-//        foreach ($this->notificationUsersData as $notification) {
+//        foreach ($this->notificationUsersData as $notification)
+//          'message' => "Today's weather in {$data->name} {$data->celsius}C"
 //            $notification->send()->queue('push');
 //        }
-        return "Send Successfully - ({$this->getCount()}) Notification";
+        if ($this->getCount()) {
+            return "Send Successfully - ({$this->getCount()}) Notification";
+        }else{
+            return "There is no city at time $this->time or no users in city";
+        }
     }
 }

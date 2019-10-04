@@ -8,7 +8,7 @@ class NotificationCron
     public function __construct()
     {
         $cron = new Notification();
-        $cron->check();
+        $cron->getUsers();
         $cron->send();
     }
 

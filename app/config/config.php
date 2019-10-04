@@ -34,7 +34,7 @@ return new \Phalcon\Config([
       'register',
       'create_dummy_data'
     ],
-    'notification_time' => '09:00'
+    'notification_time' => '09:00:00'
   ],
   'jwt' => [
     'identifier' => '5f1g24a12bb',

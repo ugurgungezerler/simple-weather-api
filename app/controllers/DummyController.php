@@ -62,8 +62,9 @@ class DummyController extends BaseController
     public function testCron()
     {
         $notification = new Notification();
-        $notification->check();
+//        $notification->check();
 
+        $notification->getUsers();
         return $this->response($notification->send());
     }
 
