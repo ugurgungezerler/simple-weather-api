@@ -86,4 +86,17 @@ class Coupons extends \Phalcon\Mvc\Model
 
         return substr(str_shuffle(str_repeat($pool, 5)), 0, $length);
     }
+
+    public function validOrFail()
+    {
+        $expires = DateTime::createFromFormat('Y-m-d H:i:s', $this->expire_at);
+
+        if (new DateTime() > $expires) {
+            throw new Exception('Coupon is expired');
+        }
+
+        if ($this->remain < 1) {
+            throw new Exception('Coupon is expired');
+        }
+    }
 }

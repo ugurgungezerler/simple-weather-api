@@ -15,11 +15,8 @@ class UserController extends BaseController
 
         $user = $this->app->auth;
 
-        // Check selected city is exists
         $cityId = $rawBody['city_id'];
-        if (Cities::isExists($cityId)) {
-            $user->city_id = $cityId;
-        }
+        $cityId && $user->city_id = $cityId;
 
         $user->lang = $rawBody['lang'];
         $user->os = $rawBody['os'];
@@ -42,7 +39,7 @@ class UserController extends BaseController
             $user = $this->app->auth;
 
             if ($user->is_premium) {
-                return $this->abort('User already premium');
+                return $this->abort('User is already premium');
             }
 
             $coupon = Coupons::findFirst([
@@ -51,20 +48,17 @@ class UserController extends BaseController
                 1 => $code,
               ]
             ]);
-
             if (!$coupon) {
                 return $this->abort('Coupon is not valid.');
             }
 
-            $expires = DateTime::createFromFormat('Y-m-d H:i:s', $coupon->expire_at);
 
-            if (new DateTime() > $expires) {
-                return $this->abort('Coupon is expired');
+            try {
+                $coupon->validOrFail();
+            } catch (Exception $e) {
+                return $this->abort($e->getMessage());
             }
 
-            if ($coupon->remain < 1) {
-                return $this->abort('Coupon is not valid');
-            }
 
             $coupon->remain--;
             $coupon->update();

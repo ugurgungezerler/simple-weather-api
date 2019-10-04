@@ -2,20 +2,47 @@
 
 use Phalcon\Mvc\Model\Query;
 
+/**
+ * Class Notification
+ */
 class Notification
 {
+    /**
+     * @var DateTime
+     */
     public $date;
+    /**
+     * @var null|\Phalcon\DiInterface
+     */
     public $di;
+    /**
+     * @var mixed
+     */
     public $config;
 
+    /**
+     * @var
+     */
     public $readyCities;
+    /**
+     * @var
+     */
     public $readyCityIds;
 
+    /**
+     * @var
+     */
     public $notificationUsersData;
 
     //when users get the notification
-    public $time = '09:00';
+    /**
+     * @var string
+     */
+    public $time;
 
+    /**
+     * Notification constructor.
+     */
     public function __construct()
     {
         $this->date = new DateTime("now", new \DateTimeZone("UTC"));
@@ -24,6 +51,9 @@ class Notification
         $this->time = $this->config->app->notification_time;
     }
 
+    /**
+     *
+     */
     public function check()
     {
         //Get Cities with current local date
@@ -35,6 +65,9 @@ class Notification
 
     }
 
+    /**
+     *
+     */
     private function injectWeatherInfosToCities()
     {
         $implodeIds = implode(',', $this->readyCityIds);
@@ -51,8 +84,17 @@ class Notification
     }
 
 
+    /**
+     * Relations ile refaktör edilebilir.
+     *
+     * Burada relations ile birden çok sorgu yerine key
+     *
+     * yöntemi ile tek seferde data oluşturulmuştur.
+     *
+     */
     private function getReadyCities()
     {
+
         $query = new Query(
           "SELECT Cities.*, CONVERT_TZ('{$this->date->format('Y-m-d H:i')}','+00:00',timezone) AS time FROM Cities",
           $this->di
@@ -83,6 +125,9 @@ class Notification
 
     }
 
+    /**
+     *
+     */
     private function createNotificationData()
     {
         $implodeIds = implode(',', $this->readyCityIds);
@@ -103,11 +148,17 @@ class Notification
         $this->notificationUsersData = $data;
     }
 
+    /**
+     * @return int
+     */
     public function getCount()
     {
         return count($this->notificationUsersData);
     }
 
+    /**
+     * @return string
+     */
     public function send()
     {
         //TODO : Chunk data and send Notifications with queue

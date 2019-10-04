@@ -18,18 +18,13 @@ class AuthController extends BaseController
 
         $user = new Users();
 
-        // Check selected city is exists
-        $cityId = $rawBody['city_id'];
-        if (Cities::isExists($cityId)) {
-            $user->city_id = $cityId;
-        }
-
         $user->email = $rawBody['email'];
         $user->password = $this->security->hash($rawBody['password']);
         $user->lang = $rawBody['lang'];
         $user->os = $rawBody['os'];
         $user->device_token = isset($rawBody['device_token']) ? $rawBody['device_token'] : '';
 
+        $cityId = $rawBody['city_id'];
         $cityId && $user->city_id = $cityId;
 
         if (!$user->save()) {
