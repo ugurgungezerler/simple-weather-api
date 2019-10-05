@@ -1,7 +1,7 @@
 # Kurulum
 ```sh
 git clone git@github.com:ugurgungezerler/simple-weather-api.git
-cd simple-weather-api_api_1
+cd simple-weather-api
 docker-compose up -d
 
 docker exec -it simple-weather-api_api_1 bash
