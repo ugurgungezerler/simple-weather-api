@@ -2,7 +2,7 @@
 ```sh
 git clone git@github.com:ugurgungezerler/simple-weather-api.git
 cd simple-weather-api
-sudo docker-compose up -d
+docker-compose up -d
 
 docker exec -it weather-app-simple_api_1 bash
 composer install
