@@ -17,7 +17,7 @@ curl 127.0.0.1/dummy/create
 ```sh
 
 # App
-'notification_time' => '09:00',
+'notification_time' => '09:00:00',
 'life' => 900  // (15dk)
 
 # Cron string  
