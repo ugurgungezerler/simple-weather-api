@@ -1,39 +1,29 @@
 # Kurulum
+```sh
 git clone git@github.com:ugurgungezerler/simple-weather-api.git
-
 cd simple-weather-api
+sudo docker-compose up -d
 
+docker exec -it weather-app-simple_api_1 bash
 composer install
-
-(Bu adimdan sonra mysql ayarlari dogru olmasi gerekir (config.php))
-
-phalcon migration run 
-
-phalcon serve
-
-localhost:8000/dummy/create
+./vendor/phalcon/devtools/phalcon migration run
+curl 127.0.0.1/dummy/create
+```
 
 # Postman
-[https://documenter.getpostman.com/view/459680/SVtR1A1M?version=latest](https://documenter.getpostman.com/view/459680/SVtR1A1M?version=latest)
+[Postman](https://documenter.getpostman.com/view/459680/SVtR1A1M?version=latest ) linki için tıklayın.
 
 # Ayarlar (Config.php)
-### App
-'notification_time' => '09:00'
+```sh
 
-'life' => 900 (15dk)
-### Database
-  'adapter' => 'Mysql',  
-  'host' => 'localhost',  
-  'username' => 'root',  
-  'password' => '',  
-  'dbname' => 'weather-db',  
-  'charset' => 'utf8',  
-### Cron string  
+# App
+'notification_time' => '09:00',
+'life' => 900  // (15dk)
+
+# Cron string  
 0 * * * * /usr/bin/php /app/path/NotificationCron.php
+```
 
 ### TODOS
-Docker Compose
-
 Unit tests
 
-Notification Cron Refactor
