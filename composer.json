@@ -1,9 +1,12 @@
 {
   "require-dev": {
     "phalcon/devtools": "~3.4",
-    "phalcon/ide-stubs": "^3.4"
+    "phalcon/ide-stubs": "^3.4",
+    "phpunit/phpunit": "^7"
+
   },
   "require": {
-    "lcobucci/jwt": "^3.3"
+    "lcobucci/jwt": "^3.3",
+    "phalcon/incubator": "^3.4"
   }
 }
