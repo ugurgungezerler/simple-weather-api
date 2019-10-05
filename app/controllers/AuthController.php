@@ -36,7 +36,7 @@ class AuthController extends BaseController
 
         $token = $this->createToken($this, $user);
 
-        return $this->response(['token' => $token, 'user' => $user], 'Register completed successfully.');
+        return $this->response(['token' => $token, 'user' => $user], 'Register completed successfully.', 201);
 
     }
 
