@@ -11,7 +11,7 @@ abstract class UnitTestCase extends PhalconTestCase
 
     public $provider;
 
-    public $apiUrl = 'http://127.0.0.1/';
+    public $apiUrl = 'http://127.0.0.1:8000/';
 
     public function __construct()
     {
@@ -19,6 +19,7 @@ abstract class UnitTestCase extends PhalconTestCase
         $this->provider = \Phalcon\Http\Client\Request::getProvider();
         $this->provider->setBaseUri($this->apiUrl);
         $this->provider->header->set('Accept', 'application/json');
+        $this->provider->header->set('Content-Type', 'application/json');
 
     }
 

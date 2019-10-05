@@ -24,6 +24,4 @@ curl 127.0.0.1/dummy/create
 0 * * * * /usr/bin/php /app/path/NotificationCron.php
 ```
 
-### TODOS
-Unit tests
 
