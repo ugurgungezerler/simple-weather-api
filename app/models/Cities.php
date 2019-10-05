@@ -27,7 +27,7 @@ class Cities extends \Phalcon\Mvc\Model
     public function initialize()
     {
         $this->setSchema("weather-db");
-        $this->setSource("Cities");
+        $this->setSource("cities");
     }
 
     /**
@@ -37,7 +37,7 @@ class Cities extends \Phalcon\Mvc\Model
      */
     public function getSource()
     {
-        return 'Cities';
+        return 'cities';
     }
 
     /**

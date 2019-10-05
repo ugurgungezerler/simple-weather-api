@@ -5,8 +5,6 @@ use Phalcon\Mvc\Micro;
 use Phalcon\Events\Manager;
 use Phalcon\Logger\Adapter\File as FileAdapter;
 
-$logger = new FileAdapter('app/logs/errors.log');
-
 
 
 error_reporting(E_ALL);
@@ -19,7 +17,7 @@ define('BASE_PATH', dirname(__DIR__));
  *
  */
 define('APP_PATH', BASE_PATH . '/app');
-
+$logger = new FileAdapter(APP_PATH . '/logs/errors.log');
 
 try {
 

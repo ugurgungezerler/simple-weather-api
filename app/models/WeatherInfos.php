@@ -33,7 +33,7 @@ class WeatherInfos extends \Phalcon\Mvc\Model
     public function initialize()
     {
         $this->setSchema("weather-db");
-        $this->setSource("Weather_Infos");
+        $this->setSource("weather_infos");
     }
 
     /**
@@ -43,7 +43,7 @@ class WeatherInfos extends \Phalcon\Mvc\Model
      */
     public function getSource()
     {
-        return 'Weather_Infos';
+        return 'weather_infos';
     }
 
     /**

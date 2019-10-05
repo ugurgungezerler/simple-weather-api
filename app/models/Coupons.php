@@ -33,7 +33,7 @@ class Coupons extends \Phalcon\Mvc\Model
     public function initialize()
     {
         $this->setSchema("weather-db");
-        $this->setSource("Coupons");
+        $this->setSource("coupons");
     }
 
     /**
@@ -43,7 +43,7 @@ class Coupons extends \Phalcon\Mvc\Model
      */
     public function getSource()
     {
-        return 'Coupons';
+        return 'coupons';
     }
 
     /**

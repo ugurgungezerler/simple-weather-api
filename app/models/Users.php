@@ -152,7 +152,7 @@ class Users extends \Phalcon\Mvc\Model
         $this->useDynamicUpdate(true);
 
         $this->setSchema("weather-db");
-        $this->setSource("Users");
+        $this->setSource("users");
 
         $this->addBehavior(
           new Timestampable(
@@ -180,7 +180,7 @@ class Users extends \Phalcon\Mvc\Model
      */
     public function getSource()
     {
-        return 'Users';
+        return 'users';
     }
 
     /**

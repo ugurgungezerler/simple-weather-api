@@ -1,2 +1,8 @@
 vendor
-.phalcon
+container/data
+container/logs/nginx/access.log
+container/logs/nginx/error.log
+composer.lock
+supervisord.log
+supervisord.pid
+migration-version

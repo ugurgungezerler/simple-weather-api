@@ -36,12 +36,24 @@ $di->setShared('url', function () {
 /**
  * Database connection is created based in the parameters defined in the configuration file
  */
+
+//#CMD bash -c "composer install  --prefer-source --no-interaction --no-autoloader"
+//#CMD bash -c "~/.composer/vendor/bin/phalcon migration run"
+//#RUN pwd
+//#CMD ['composer install --no-dev --no-interaction -o']
+//
+//#CMD bash -c "export COMPOSER_ALLOW_SUPERUSER=1; composer show;"
+//#ONBUILD RUN composer update
+//#CMD bash -c "composer global require phalcon/devtools"
+//#CMD bash -c "docker info | sed '/Username:/!d;s/.* //
+//#alias phalcon=/home/[USERNAME]/phalcon-devtools/phalcon
 $di->setShared('db', function () {
     $config = $this->getConfig();
 
     $class = 'Phalcon\Db\Adapter\Pdo\\' . $config->database->adapter;
     $params = [
       'host' => $config->database->host,
+      'port' => $config->database->port,
       'username' => $config->database->username,
       'password' => $config->database->password,
       'dbname' => $config->database->dbname,

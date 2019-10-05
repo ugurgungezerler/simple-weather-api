@@ -31,7 +31,7 @@ class DummyController extends BaseController
             $batch->data = Cities::createWeatherInfoDummyData();
             $batch->insert();
         } catch (Exception $e) {
-            return $this->abort('Something went wrong');
+            return $this->abort($e->getMessage());
         }
         return $this->response(null, 'Success');
     }
