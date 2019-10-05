@@ -1,10 +1,10 @@
 # Kurulum
 ```sh
 git clone git@github.com:ugurgungezerler/simple-weather-api.git
-cd simple-weather-api
+cd simple-weather-api_api_1
 docker-compose up -d
 
-docker exec -it weather-app-simple_api_1 bash
+docker exec -it simple-weather-api_api_1 bash
 composer install
 ./vendor/phalcon/devtools/phalcon migration run
 curl 127.0.0.1/dummy/create
